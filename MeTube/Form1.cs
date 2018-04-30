@@ -27,8 +27,8 @@ namespace MeTube3
             public static void Execute(Action action) { Sync.BeginInvoke(action, null); }
         }
 
-        IMediaPlayerFactory m_factory;
-        IDiskPlayer m_player;
+        //         IMediaPlayerFactory m_factory;
+        //         IDiskPlayer m_player;
 
         struct VideoInstace
         {
@@ -44,11 +44,12 @@ namespace MeTube3
             public string URL;
             public Int64 fileSize;
         };
-
+        MeTube tube = new MeTube();
         class MeTube
         {
             public string youTubeVideoID = "Pr8rOmTcf5Q";
-
+            IMediaPlayerFactory m_factory;
+            IDiskPlayer m_player;
             public List<VideoInstace> videoInstances;
             public List<AudioInstace> audioInstances;
 
@@ -140,30 +141,30 @@ namespace MeTube3
                 return true;
             }
 
-            public void GoFullscreen(bool fullscreen)
-            {
-                if (fullscreen)
-                {
-                    this.WindowState = FormWindowState.Normal;
-                    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-                    this.Bounds = Screen.PrimaryScreen.Bounds;
-                }
-                else
-                {
-                    this.WindowState = FormWindowState.Maximized;
-                    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
-                }
-            }
+            //             public void GoFullscreen(bool fullscreen)
+            //             {
+            //                 if (fullscreen)
+            //                 {
+            //                     this.WindowState = FormWindowState.Normal;
+            //                     this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            //                     this.Bounds = Screen.PrimaryScreen.Bounds;
+            //                 }
+            //                 else
+            //                 {
+            //                     this.WindowState = FormWindowState.Maximized;
+            //                     this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            //                 }
+            //             }
 
-            public void PlayVideo(string videoURL)
+            public void PlayVideo(string videoURL, Panel VideoPanelDisp)
             {
                 m_factory = new MediaPlayerFactory(true);
                 m_player = m_factory.CreatePlayer<IDiskPlayer>();
-                m_player.WindowHandle = VideoPanel.Handle;
-                UISync.Init(this);
+                m_player.WindowHandle = VideoPanelDisp.Handle;
+                /* UISync.Init(this);*/
                 IMedia stream = m_factory.CreateMedia<IMedia>(videoURL);
                 IVideoPlayer m_renderer = m_factory.CreatePlayer<IVideoPlayer>();
-                m_renderer.WindowHandle = VideoPanel.Handle;
+                m_renderer.WindowHandle = VideoPanelDisp.Handle;
                 m_player.Open(stream);
                 stream.Parse(false);
                 m_player.Play();
@@ -171,21 +172,22 @@ namespace MeTube3
 
             public MeTube()
             {
-                var youTubeVideoID = "Pr8rOmTcf5Q";
+                //var youTubeVideoID = "Pr8rOmTcf5Q";
 
-                var videoInstances = new List<VideoInstace>();
-                var audioInstances = new List<AudioInstace>();
+                videoInstances = new List<VideoInstace>();
+                audioInstances = new List<AudioInstace>();
                 RetreiveVideoStreams(youTubeVideoID, out videoInstances, out audioInstances);
-                PlayVideo(videoInstances[0].URL);
+               // tube.PlayVideo(videoInstances[0].URL, Form1.VideoPanel);
             }
         }
 
-        public Form1() { InitializeComponent();}
+        public Form1() { InitializeComponent(); }
 
         public void Form1_Load(object sender, EventArgs e)
         {
-            MeTube tube;
-            tube.
+            UISync.Init(this);
+            /* MeTube tube;*/
+            MeTube2();
         }
 
         public void MeTube2()
@@ -194,26 +196,51 @@ namespace MeTube3
 
             var videoInstances = new List<VideoInstace>();
             var audioInstances = new List<AudioInstace>();
-            RetreiveVideoStreams(youTubeVideoID, out videoInstances, out audioInstances);
+            tube.RetreiveVideoStreams(youTubeVideoID, out videoInstances, out audioInstances);
             comboBoxQuality.Items.Clear();
-            foreach(var video in videoInstances)
+            foreach (var video in videoInstances)
             {
-                comboBoxQuality.Items.Add(video.width + " x "+video.height+ "  -  "+ video.Format);
+                comboBoxQuality.Items.Add(video.width + " x " + video.height + "  -  " + video.Format);
 
             }
             if (comboBoxQuality.Items.Count > 0)
             {
                 comboBoxQuality.SelectedIndex = 0;
-                PlayVideo(videoInstances[0].URL);
+
+                tube.PlayVideo(videoInstances[0].URL, VideoPanel);
+                //tube.PlayVideo(videoInstances[0].URL, VideoPanel2);
             }
 
         }
 
+        public void GoFullscreen(bool fullscreen)
+        {
+            if (fullscreen)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                this.Bounds = Screen.PrimaryScreen.Bounds;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            }
+        }
+
+
         public void comboBoxQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ComboBox comboBox = (ComboBox)sender;
-            int index = comboBox.SelectedIndex;
-            PlayVideo(videoInstances[index].URL);
+            // ComboBox comboBox = (ComboBox)sender;
+            //  int index = comboBox.SelectedIndex;
+
+
+
+            if (comboBoxQuality.Items.Count != -1)
+            {
+                //tube.PlayVideo(tube.videoInstances[comboBoxQuality.SelectedIndex].URL, VideoPanel);
+            }
+
         }
     }
 }

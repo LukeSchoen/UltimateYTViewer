@@ -54,7 +54,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1278, 794);
+            this.ClientSize = new System.Drawing.Size(1004, 794);
             this.Controls.Add(this.comboBoxQuality);
             this.Controls.Add(this.VideoPanel);
             this.Name = "Form1";
