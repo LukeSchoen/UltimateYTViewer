@@ -1,6 +1,6 @@
 ﻿namespace MeTube3
 {
-    partial class Form1
+    partial class UltimateYoutubeViewer
     {
         /// <summary>
         /// Required designer variable.
@@ -28,38 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UltimateYoutubeViewer));
             this.VideoPanel = new System.Windows.Forms.Panel();
-            this.comboBoxQuality = new System.Windows.Forms.ComboBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // VideoPanel
             // 
             this.VideoPanel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.VideoPanel.Location = new System.Drawing.Point(21, 24);
+            this.VideoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VideoPanel.Location = new System.Drawing.Point(0, 0);
             this.VideoPanel.Name = "VideoPanel";
-            this.VideoPanel.Size = new System.Drawing.Size(720, 539);
-            this.VideoPanel.TabIndex = 0;
+            this.VideoPanel.Size = new System.Drawing.Size(782, 453);
+            this.VideoPanel.TabIndex = 1;
+            this.VideoPanel.Resize += new System.EventHandler(this.VideoPanel_Resize);
             // 
-            // comboBoxQuality
+            // backgroundWorker1
             // 
-            this.comboBoxQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxQuality.FormattingEnabled = true;
-            this.comboBoxQuality.Location = new System.Drawing.Point(829, 89);
-            this.comboBoxQuality.Name = "comboBoxQuality";
-            this.comboBoxQuality.Size = new System.Drawing.Size(121, 24);
-            this.comboBoxQuality.TabIndex = 1;
-            this.comboBoxQuality.SelectedIndexChanged += new System.EventHandler(this.comboBoxQuality_SelectedIndexChanged);
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
-            // Form1
+            // UltimateYoutubeViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1004, 794);
-            this.Controls.Add(this.comboBoxQuality);
+            this.ClientSize = new System.Drawing.Size(782, 453);
             this.Controls.Add(this.VideoPanel);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "UltimateYoutubeViewer";
+            this.Text = "MeTube";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.UltimateYoutubeViewer_KeyPress);
             this.ResumeLayout(false);
 
         }
@@ -67,7 +65,7 @@
         #endregion
 
         private System.Windows.Forms.Panel VideoPanel;
-        private System.Windows.Forms.ComboBox comboBoxQuality;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 
